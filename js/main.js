@@ -10,9 +10,9 @@ require(['jquery','window'],function($,w){
 		win.alert({
 			title:'Tap',
 			content:'welcome!',
-			handler:function(){
+			/*handler:function(){
 				alert('You click the button!');
-			},
+			},*/
 			width:300,
 			height:150,
 			y:50,
@@ -26,13 +26,18 @@ require(['jquery','window'],function($,w){
 			handler4CloseBtn:function(){
 				alert('You click the close button!');
 			}*/
+		}).on("alert",function(){
+			alert("You click the alert button!");
+		}).on("alert",function(){
+			alert("The second alert handler");
 		});
-		win.on("alert",function(){
+		//Á¬×ºÓï·¨
+		/*win.on("alert",function(){
 			alert("You click the alert button!");
 		});
 		win.on("alert",function(){
 			alert("The second alert handler");
-		});
+		});*/
 		win.on("alert",function(){
 			alert("The third alert handler");
 		});

@@ -7,6 +7,7 @@ define([ 'jquery' ],function($){
 			content:'',
 			handler:null,
 			hasCloseBtn:false,
+			hasMask:true,
 			skinClassName:null,
 			text4AlertBtn:'confirm',
 			handler4AlertBtn:null,
@@ -33,11 +34,17 @@ define([ 'jquery' ],function($){
 						'<div class="window_footer"><button class="window_alertBtn">'+CFG.text4AlertBtn+'</button></div>'+
 					'</div>'
 				),
-				btn = boundingBox.find('.window_alertBtn');
+				btn = boundingBox.find('.window_alertBtn'),
+				mask = null;
+				if(CFG.hasMask){
+					mask = $('<div class="window_mask"></div>');
+					mask.appendTo('body');
+				}
 			boundingBox.appendTo('body');
 			btn.click(function(){
 				CFG.handler4AlertBtn && CFG.handler4AlertBtn();
 				boundingBox.remove();
+				mask && mask.remove();
 			});
 			$.extend(this.cfg,cfg);
 			boundingBox.css({
@@ -53,6 +60,7 @@ define([ 'jquery' ],function($){
 				closeBtn.click(function(){
 					CFG.handler4CloseBtn && CFG.handler4CloseBtn();
 					boundingBox.remove();
+					mask && mask.remove();
 				});
 			}
 

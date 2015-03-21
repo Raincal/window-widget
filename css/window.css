@@ -33,14 +33,34 @@
 
 /*skin for a*/
 .window_skin_a.window_boundingBox{
-
+    box-shadow: none;
+    border: 10px solid rgba(0,0,0,0.3);
+    border-radius: 8px;
 }
-.window_skin_a.window_header{
+.window_skin_a .window_header{
     background: red;
+    text-align:left;
+    padding: 10px;
 }
-.window_skin_a.window_alertBtn{
-
+.window_skin_a .window_alertBtn{
+    right: 20px;
+    left: auto;
+    margin-left: 0;
+    background: red;
+    border: none;
+    padding: 5px;
+    color: #fff;
+    border-radius:5px;
 }
-.window_skin_a.window_closeBtn{
-    
+.window_skin_a .window_closeBtn{
+    width: 45px;
+    height: 45px;
+    border-radius:50%;
+    line-height: 45px;
+    padding: 0;
+    right: -15px;
+    top: -15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
 }

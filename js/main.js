@@ -15,6 +15,7 @@ require(['jquery','window'],function($,w){
 			height:150,
 			y:50,
 			hasCloseBtn:true,
+			text4AlertBtn:'OK',
 			skinClassName:'window_skin_a',
 			handler4AlertBtn:function(){
 				alert('You click the alert button!');

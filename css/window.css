@@ -1,0 +1,46 @@
+.window_boundingBox{
+    position: fixed;
+    border: 1px solid #000;
+    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+}
+.window_alertBtn{
+    width: 100px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -50px;
+}
+.window_header{
+    font-size: 20px;
+    background: #333;
+    color: #ffffff;
+    padding: 5px;
+    text-align: center;
+}
+.window_body{
+    padding: 10px;
+}
+.window_closeBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: blue;
+    color: #fff;
+    font-size: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/*skin for a*/
+.window_skin_a.window_boundingBox{
+
+}
+.window_skin_a.window_header{
+    background: red;
+}
+.window_skin_a.window_alertBtn{
+
+}
+.window_skin_a.window_closeBtn{
+    
+}

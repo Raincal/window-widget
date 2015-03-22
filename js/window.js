@@ -14,6 +14,11 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			text4AlertBtn:'confirm',
 			text4ConfirmBtn:'confirm',
 			text4CancelBtn:'cancel',
+			text4PromptBtn:"confirm",
+			isPromptInputPassword:false,
+			defaultValue4PromptInput:"",
+			maxlength4PromptInput:10,
+			handler4PromptBtn:null,
 			handler4AlertBtn:null,
 			handler4CloseBtn:null,
 			handler4ConfirmBtn:null,
@@ -31,6 +36,10 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 				case "confirm":
 					footerContent = '<button class="window_confirmBtn">'+this.cfg.text4ConfirmBtn+'</button><button class="window_cancelBtn">'+this.cfg.text4CancelBtn+'</button>';
 					break;
+				case "prompt":
+					this.cfg.content += '<p class="window_promptInputWrapper"><input type="'+(this.cfg.isPromptInputPassword?"password":"text")+'"value="'+this.cfg.defaultValue4PromptInput+'"maxlength="'+this.cfg.maxlength4PromptInput+'"class="window_promptInput"></p>';
+					footerContent = '<input type="button" value="'+this.cfg.text4PromptBtn +'"class="window_promptBtn"><input type="button" value="'+this.cfg.text4CancelBtn +'"class="window_cancelBtn">';
+					break;
 			}
 			this.boundingBox = $(
 				'<div class="window_boundingBox">'+
@@ -47,6 +56,7 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 				this.boundingBox.append('<span class="window_closeBtn">X</span>');
 			}
 			this.boundingBox.appendTo(document.body);
+			this.promptInput = this.boundingBox.find(".window_promptInput");
 		},
 		bindUI : function(){
 			var that = this;
@@ -62,6 +72,9 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			}).delegate(".window_cancelBtn","click",function() {
 					that.fire("cancel");
 					that.destroy();
+			}).delegate(".window_promptBtn","click",function() {
+				that.fire("prompt",that.promptInput.val());
+				that.destroy();
 			});
 			if(this.cfg.handler4AlertBtn){
 				this.on("alert",this.cfg.handler4AlertBtn);
@@ -74,6 +87,9 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			}
 			if(this.cfg.handler4CancelBtn){
 				this.on("cancel",this.cfg.handler4CancelBtn);
+			}
+			if(this.cfg.handler4PromptBtn){
+				this.on("prompt",this.cfg.handler4PromptBtn);
 			}
 		},
 		syncUI : function(){
@@ -161,7 +177,12 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			this.render();
 			return this;
 		},
-		prompt : function(){}
+		prompt : function(cfg){
+			$.extend(this.cfg,cfg,{winType:"prompt"});
+			this.render();
+			this.promptInput.focus();
+			return this;
+		}
 	});
 	return {
 		Window : Window

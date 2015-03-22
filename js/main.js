@@ -65,4 +65,24 @@ require(['jquery','window'],function($,w){
 			alert("cancel");
 		})
 	})
+
+	$('#c').click(function(){
+		new w.Window().prompt({
+			title : "Please enter your name",
+			content : "We will protect your information",
+			width : 300,
+			height : 150,
+			y : 50,
+			text4PromptBtn : "enter",
+			text4CancelBtn : "cancel",
+			defaultValue4PromptInput : "Rain",
+			dragHandle : ".window_header",
+			handler4PromptBtn : function(inputValue){
+				alert("You entered: " + inputValue);
+			},
+			handler4CancelBtn : function(){
+				alert("cancel");
+			}
+		})
+	})
 });

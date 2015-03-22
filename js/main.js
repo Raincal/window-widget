@@ -8,11 +8,8 @@ require(['jquery','window'],function($,w){
 	$('#a').click(function(){
 		var win = new w.Window();
 		win.alert({
-			title:'Tap',
+			title:'Tip',
 			content:'welcome!',
-			/*handler:function(){
-				alert('You click the button!');
-			},*/
 			width:300,
 			height:150,
 			y:50,
@@ -20,35 +17,18 @@ require(['jquery','window'],function($,w){
 			text4AlertBtn:'OK',
 			dragHandle:'.window_header',
 			skinClassName:'window_skin_a'
-			/*handler4AlertBtn:function(){
-				alert('You click the alert button!');
-			},
-			handler4CloseBtn:function(){
-				alert('You click the close button!');
-			}*/
 		}).on("alert",function(){
 			alert("You click the alert button!");
 		}).on("alert",function(){
 			alert("The second alert handler");
-		});
-		//Á¬×ºÓï·¨
-		/*win.on("alert",function(){
-			alert("You click the alert button!");
-		});
-		win.on("alert",function(){
-			alert("The second alert handler");
-		});*/
-		win.on("alert",function(){
+		}).on("alert",function(){
 			alert("The third alert handler");
-		});
-		win.on("close",function(){
+		}).on("close",function(){
 			alert("You click the close button!");
-		});
-		win.on("close",function(){
+		}).on("close",function(){
 			alert("The second close handler");
 		});
 	});
-
 	$('#b').click(function(){
 		new w.Window().confirm({
 			title : "System Message",
@@ -65,7 +45,6 @@ require(['jquery','window'],function($,w){
 			alert("cancel");
 		})
 	})
-
 	$('#c').click(function(){
 		new w.Window().prompt({
 			title : "Please enter your name",
@@ -83,6 +62,15 @@ require(['jquery','window'],function($,w){
 			handler4CancelBtn : function(){
 				alert("cancel");
 			}
+		})
+	})
+	$('#d').click(function(){
+		new w.Window().common({
+			content : "common window",
+			width : 300,
+			height : 150,
+			y : 50,
+			hasCloseBtn : true
 		})
 	})
 });

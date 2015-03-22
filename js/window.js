@@ -43,11 +43,13 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			}
 			this.boundingBox = $(
 				'<div class="window_boundingBox">'+
-					'<div class="window_header"><h4>'+this.cfg.title+'</h4></div>'+
 					'<div class="window_body">'+this.cfg.content+'</div>'+
-					'<div class="window_footer">'+footerContent+'</div>'+
 				'</div>'
 			);
+			if(this.cfg.winType != "common"){
+				this.boundingBox.prepend('<div class="window_header"><h4>'+this.cfg.title+'</h4></div>');
+				this.boundingBox.append('<div class="window_footer">'+footerContent+'</div>');
+			}
 			if(this.cfg.hasMask){
 				this._mask = $('<div class="window_mask"></div>');
 				this._mask.appendTo('body');
@@ -114,62 +116,8 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			this._mask && this._mask.remove();
 		},
 		alert : function(cfg){
-			//var CFG = $.extend(this.cfg,cfg),
-				/*boundingBox = $(
-					'<div class="window_boundingBox">'+
-						'<div class="window_header"><h4>'+CFG.title+'</h4></div>'+
-						'<div class="window_body">'+CFG.content+'</div>'+
-						'<div class="window_footer"><button class="window_alertBtn">'+CFG.text4AlertBtn+'</button></div>'+
-					'</div>'
-				),*/
-				/*btn = boundingBox.find('.window_alertBtn'),
-				mask = null;
-				that = this;*/
-				/*if(CFG.hasMask){
-					mask = $('<div class="window_mask"></div>');
-					mask.appendTo('body');
-				}
-			boundingBox.appendTo('body');
-			btn.click(function(){
-				CFG.handler4AlertBtn && CFG.handler4AlertBtn();
-				boundingBox.remove();
-				mask && mask.remove();
-				that.fire("alert");
-			});*/
 			$.extend(this.cfg,cfg,{winType:"alert"});
 			this.render();
-			/*boundingBox.css({
-				width:this.cfg.width + 'px',
-				height:this.cfg.height + 'px',
-				left:(this.cfg.x || (window.innerWidth - this.cfg.width)/2) + 'px',
-				top:(this.cfg.y || (window.innerHeight - this.cfg.height)/2) + 'px'
-			});*/
-			/*if(CFG.hasCloseBtn){
-				var closeBtn = $('<span class="window_closeBtn">X</span>');
-				closeBtn.appendTo(boundingBox);
-				closeBtn.click(function(){
-					CFG.handler4CloseBtn && CFG.handler4CloseBtn();
-					boundingBox.remove();
-					mask && mask.remove();
-					that.fire("close");
-				});
-			}*/
-			/*if(CFG.handler4AlertBtn){
-				this.on("alert",CFG.handler4AlertBtn);
-			}
-			if(CFG.handler4CloseBtn){
-				this.on("close",CFG.handler4CloseBtn);
-			}
-			if(CFG.skinClassName){
-				boundingBox.addClass(CFG.skinClassName);
-			}
-			if(CFG.isDraggable){
-				if(CFG.dragHandle){
-					boundingBox.draggable({handle:CFG.dragHandle});
-				}else{
-					boundingBox.draggable();
-				}
-			}*/
 			return this;
 		},
 		confirm : function(cfg){
@@ -181,6 +129,11 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			$.extend(this.cfg,cfg,{winType:"prompt"});
 			this.render();
 			this.promptInput.focus();
+			return this;
+		},
+		common : function(cfg){
+			$.extend(this.cfg,cfg,{winType:"common"});
+			this.render();
 			return this;
 		}
 	});

@@ -12,18 +12,31 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			dragHandle:null,
 			skinClassName:null,
 			text4AlertBtn:'confirm',
+			text4ConfirmBtn:'confirm',
+			text4CancelBtn:'cancel',
 			handler4AlertBtn:null,
-			handler4CloseBtn:null
+			handler4CloseBtn:null,
+			handler4ConfirmBtn:null,
+			handler4CancelBtn:null
 		};
 		this.handlers = {};
 	}
 	Window.prototype = $.extend({},new widget.Widget(),{
 		renderUI : function(){
+			var footerContent = "";
+			switch(this.cfg.winType){
+				case "alert":
+					footerContent = '<button class="window_alertBtn">'+this.cfg.text4AlertBtn+'</button>';
+					break;
+				case "confirm":
+					footerContent = '<button class="window_confirmBtn">'+this.cfg.text4ConfirmBtn+'</button><button class="window_cancelBtn">'+this.cfg.text4CancelBtn+'</button>';
+					break;
+			}
 			this.boundingBox = $(
 				'<div class="window_boundingBox">'+
-				'<div class="window_header"><h4>'+this.cfg.title+'</h4></div>'+
-				'<div class="window_body">'+this.cfg.content+'</div>'+
-				'<div class="window_footer"><button class="window_alertBtn">'+this.cfg.text4AlertBtn+'</button></div>'+
+					'<div class="window_header"><h4>'+this.cfg.title+'</h4></div>'+
+					'<div class="window_body">'+this.cfg.content+'</div>'+
+					'<div class="window_footer">'+footerContent+'</div>'+
 				'</div>'
 			);
 			if(this.cfg.hasMask){
@@ -43,12 +56,24 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			}).delegate(".window_closeBtn","click",function(){
 					that.fire("close");
 					that.destroy();
+			}).delegate(".window_confirmBtn","click",function() {
+					that.fire("confirm");
+					that.destroy();
+			}).delegate(".window_cancelBtn","click",function() {
+					that.fire("cancel");
+					that.destroy();
 			});
 			if(this.cfg.handler4AlertBtn){
 				this.on("alert",this.cfg.handler4AlertBtn);
 			}
 			if(this.cfg.handler4CloseBtn){
 				this.on("close",this.cfg.handler4CloseBtn);
+			}
+			if(this.cfg.handler4ConfirmBtn){
+				this.on("confirm",this.cfg.handler4ConfirmBtn);
+			}
+			if(this.cfg.handler4CancelBtn){
+				this.on("cancel",this.cfg.handler4CancelBtn);
 			}
 		},
 		syncUI : function(){
@@ -95,7 +120,7 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 				mask && mask.remove();
 				that.fire("alert");
 			});*/
-			$.extend(this.cfg,cfg);
+			$.extend(this.cfg,cfg,{winType:"alert"});
 			this.render();
 			/*boundingBox.css({
 				width:this.cfg.width + 'px',
@@ -103,7 +128,6 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 				left:(this.cfg.x || (window.innerWidth - this.cfg.width)/2) + 'px',
 				top:(this.cfg.y || (window.innerHeight - this.cfg.height)/2) + 'px'
 			});*/
-
 			/*if(CFG.hasCloseBtn){
 				var closeBtn = $('<span class="window_closeBtn">X</span>');
 				closeBtn.appendTo(boundingBox);
@@ -132,7 +156,11 @@ define([ 'widget','jquery','jqueryUI'],function(widget,$,$UI){
 			}*/
 			return this;
 		},
-		confirm : function(){},
+		confirm : function(cfg){
+			$.extend(this.cfg,cfg,{winType:"confirm"});
+			this.render();
+			return this;
+		},
 		prompt : function(){}
 	});
 	return {

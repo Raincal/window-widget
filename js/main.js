@@ -47,5 +47,22 @@ require(['jquery','window'],function($,w){
 		win.on("close",function(){
 			alert("The second close handler");
 		});
+	});
+
+	$('#b').click(function(){
+		new w.Window().confirm({
+			title : "System Message",
+			content : "Are you sure?",
+			width : 300,
+			height : 150,
+			y : 50,
+			text4ConfirmBtn : "Yes",
+			text4CancelBtn : "No",
+			dragHandle : ".window_header"
+		}).on("confirm",function(){
+			alert("confirm");
+		}).on("cancel",function(){
+			alert("cancel");
+		})
 	})
 });
